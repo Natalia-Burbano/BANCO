@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="contenidoPane" style="-fx-background-color: #218521;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uniquindio.edu.co.poo.bancouq.controller.MainController">
+
+    <!-- TOP (puede incluir un título o estar vacío) -->
+    <top>
+        <VBox alignment="CENTER" style="-fx-background-color: #218521; -fx-padding: 20;">
+            <cursor>
+                <Cursor fx:constant="SE_RESIZE" />
+            </cursor>
+            <effect>
+                <DropShadow />
+            </effect>
+        </VBox>
+    </top>
+
+    <!-- LEFT IMAGE -->
+    <left>
+        <StackPane alignment="CENTER" prefWidth="250">
+         <children>
+            <AnchorPane prefHeight="250.0" prefWidth="343.0">
+               <children>
+                  <ImageView fitHeight="765.0" fitWidth="364.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@diseno_izquierdo.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+        </StackPane>
+    </left>
+
+    <!-- RIGHT IMAGE -->
+    <right>
+        <StackPane alignment="CENTER" prefWidth="250">
+            <ImageView fitHeight="766.0" fitWidth="486.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                    <Image url="@diseno_derecho.jpg" />
+                </image>
+            </ImageView>
+         <AnchorPane prefHeight="434.0" prefWidth="234.0" />
+        </StackPane>
+    </right>
+
+    <!-- CENTER MENU -->
+    <center>
+        <VBox alignment="CENTER" prefHeight="462.0" prefWidth="521.0" spacing="30" style="-fx-padding: 50; -fx-background-color: #ffffff;">
+            <Label style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Menú de Gestión">
+                <font>
+                    <Font name="Franklin Gothic Demi Cond" size="56.0" />
+                </font>
+            </Label>
+
+            <VBox alignment="CENTER" maxWidth="400" spacing="20">
+                <Button onAction="#mostrarCajeroView" style="-fx-font-size: 16px; -fx-background-color: #006400; -fx-text-fill: white; -fx-padding: 15 30; -fx-border-radius: 5; -fx-min-width: 300;" text="Gestión de Cajero">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+
+                <Button onAction="#mostrarTransaccionView" style="-fx-font-size: 16px; -fx-background-color: #006400; -fx-text-fill: white; -fx-padding: 15 30; -fx-border-radius: 5; -fx-min-width: 300;" text="Gestión de Transacciones">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+
+                <Button onAction="#mostrarAdministradorView" style="-fx-font-size: 16px; -fx-background-color: #006400; -fx-text-fill: white; -fx-padding: 15 30; -fx-border-radius: 5; -fx-min-width: 300;" text="Gestión de Administradores">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></Button>
+
+                <effect>
+                    <DropShadow radius="7.66" width="11.64" />
+                </effect>
+            </VBox>
+
+            <Label style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d; -fx-padding: 30 0 0 0;" text="© 2025 BancoUQ - Todos los derechos reservados" />
+
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+        </VBox>
+    </center>
+
+    <!-- SOMBRA GENERAL -->
+    <effect>
+        <DropShadow height="52.58" radius="25.4975" spread="0.33" width="51.41" />
+    </effect>
+</BorderPane>

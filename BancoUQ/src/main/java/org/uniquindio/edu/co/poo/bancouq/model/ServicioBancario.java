@@ -1,7 +1,5 @@
 package org.uniquindio.edu.co.poo.bancouq.model;
-import org.uniquindio.edu.co.poo.bancouq.model.Administrador;
-
-
+//import org.uniquindio.edu.co.poo.bancouq.model.Administrador;
 
 public class ServicioBancario {
     private Administrador administrador;
@@ -58,10 +56,20 @@ public class ServicioBancario {
     }
 
     public double consultarSaldo(int idCliente) {
-        Cliente cliente = administrador.buscarCliente(idCliente);
-        if (cliente != null) {
-            return cliente.getCuenta().getSaldo();
+        if (idCliente <= 0) {
+            throw new IllegalArgumentException("El ID del cliente debe ser positivo.");
         }
-        return -1;
+
+        Cliente cliente = administrador.buscarCliente(idCliente);
+        if (cliente == null) {
+            throw new IllegalArgumentException("Cliente no encontrado con ID: " + idCliente);
+        }
+
+        Cuenta cuenta = cliente.getCuenta();
+        if (cuenta == null) {
+            throw new IllegalStateException("El cliente no tiene una cuenta asociada.");
+        }
+
+        return cuenta.getSaldo();
     }
 }

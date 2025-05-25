@@ -1,7 +1,5 @@
 package org.uniquindio.edu.co.poo.bancouq.model;
 
-import java.time.LocalDateTime;
-
 public class Transaccion {
 
     private String tipo;

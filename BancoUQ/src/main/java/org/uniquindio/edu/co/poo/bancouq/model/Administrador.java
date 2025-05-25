@@ -60,22 +60,62 @@ public class Administrador {
     }
 
     // Gestión de clientes
-    public void agregarCliente(Cliente cliente) {
-        clientes.add(cliente);
+    // Métodos auxiliares de validación
+    private boolean clienteExiste(int id) {
+        return buscarCliente(id) != null;
+    }
+
+    private boolean clienteValido(Cliente cliente) {
+        return cliente != null && cliente.getId() > 0 && cliente.getNombre() != null && !cliente.getNombre().isEmpty();
     }
 
     public Cliente buscarCliente(int id) {
-        for (int i = 0; i < clientes.size(); i++) {
-            if (clientes.get(i).getId() == id) {
-                return clientes.get(i);
+        for (Cliente cliente : clientes) {
+            if (cliente.getId() == id) {
+                return cliente;
             }
         }
         return null;
     }
+    
+    //Create, Read, Update, Delete (CRUD) para clientes
+    public boolean agregarCliente(Cliente cliente) {
+        if (!clienteValido(cliente)) {
+            System.out.println("Cliente no válido.");
+            return false;
+        }
+        if (clienteExiste(cliente.getId())) {
+            System.out.println("Ya existe un cliente con ese ID.");
+            return false;
+        }
+        clientes.add(cliente);
+        return true;
+    }
 
-    public Cliente buscarClientePorUsername(String username) {
-        // Método removido ya que Cliente no tiene username
-        return null;
+
+    public boolean eliminarCliente(int id) {
+        Cliente cliente = buscarCliente(id);
+        if (cliente == null) {
+            System.out.println("Cliente no encontrado.");
+            return false;
+        }
+        clientes.remove(cliente);
+        return true;
+    }
+
+    public boolean actualizarCliente(Cliente clienteActualizado) {
+        if (!clienteValido(clienteActualizado)) {
+            System.out.println("Cliente no válido.");
+            return false;
+        }
+        for (int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i).getId() == clienteActualizado.getId()) {
+                clientes.set(i, clienteActualizado);
+                return true;
+            }
+        }
+        System.out.println("Cliente no encontrado.");
+        return false;
     }
 
     // Gestión de transacciones
@@ -98,7 +138,7 @@ public class Administrador {
         return this.usuario.equals(username) && this.contrasena.equals(password);
     }
 
-    // Guardar empleados en archivo (manejo básico de excepciones)
+    // Guardar empleados en archivo 
     public void guardarEmpleados() {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("empleados.txt"));
@@ -113,7 +153,7 @@ public class Administrador {
         }
     }
 
-    // Cargar empleados desde archivo (manejo básico de excepciones)
+    // Cargar empleados desde archivo 
     public void cargarEmpleados() {
         try {
             empleados.clear();

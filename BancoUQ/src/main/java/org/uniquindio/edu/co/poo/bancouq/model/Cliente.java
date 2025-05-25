@@ -1,8 +1,5 @@
 package org.uniquindio.edu.co.poo.bancouq.model;
 
-import javafx.beans.binding.BooleanExpression;
-import javafx.beans.property.*;
-
 public class Cliente {
     private int id;
     private String nombre;
@@ -39,7 +36,7 @@ public class Cliente {
     // Método para mostrar información en JavaFX
     public String getInfoCompleta() {
         return "ID: " + id + " | Nombre: " + nombre + " | Cuenta: " + cuenta.getNumeroCuenta() +
-                 " | Saldo: $" + cuenta.getSaldo();
+                " | Saldo: $" + cuenta.getSaldo();
     }
 
 }

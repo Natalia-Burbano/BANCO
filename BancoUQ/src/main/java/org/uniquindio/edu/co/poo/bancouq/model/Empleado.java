@@ -1,6 +1,5 @@
 package org.uniquindio.edu.co.poo.bancouq.model;
 
-import javafx.beans.property.*;
 
 public class Empleado {
     private int id;

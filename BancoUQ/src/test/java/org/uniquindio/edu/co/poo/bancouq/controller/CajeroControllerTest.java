@@ -4,13 +4,10 @@ import org.uniquindio.edu.co.poo.bancouq.model.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,7 +19,7 @@ public class CajeroControllerTest {
     @BeforeEach
     public void setUp() throws Exception {
         // Inicializar controlador
-        cajeroController = new CajeroController();
+        cajeroController = new CajeroController(null);
 
         // Configurar lista de clientes de prueba
         clientes = FXCollections.observableArrayList();

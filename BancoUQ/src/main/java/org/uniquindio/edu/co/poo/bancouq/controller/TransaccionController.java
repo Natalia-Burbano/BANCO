@@ -41,16 +41,35 @@ public class TransaccionController {
     }
 
     public double consultarSaldo(int numeroCuenta) {
-        Cliente cliente = buscarClientePorNumeroCuenta(numeroCuenta);
-        if (cliente != null) {
-            return servicioBancario.consultarSaldo(cliente.getId());
+        if (numeroCuenta <= 0) {
+            // Número de cuenta inválido
+            return -1;
         }
-        return -1;
+
+        Cliente cliente = buscarClientePorNumeroCuenta(numeroCuenta);
+        if (cliente == null) {
+            // Cliente no encontrado
+            return -1;
+        }
+
+        double saldo = servicioBancario.consultarSaldo(cliente.getId());
+        if (saldo < 0) {
+            // Saldo no disponible o error en la consulta
+            return -1;
+        }
+
+        return saldo;
     }
 
     // Métodos auxiliares
     public Cliente buscarClientePorNumeroCuenta(int numeroCuenta) {
+        if (administrador == null || administrador.getClientes() == null) {
+            return null;
+        }
         for (Cliente cliente : administrador.getClientes()) {
+            if (cliente == null || cliente.getCuenta() == null) {
+                continue;
+            }
             if (cliente.getCuenta().getNumeroCuenta() == numeroCuenta) {
                 return cliente;
             }

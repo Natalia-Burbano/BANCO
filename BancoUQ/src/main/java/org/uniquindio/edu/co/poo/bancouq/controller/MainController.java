@@ -33,4 +33,8 @@ public class MainController {
             e.printStackTrace();
         }
     }
+    
+    public BorderPane getContenidoPane() {
+        return contenidoPane;
+    }
 }

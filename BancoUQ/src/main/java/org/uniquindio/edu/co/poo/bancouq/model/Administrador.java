@@ -38,12 +38,14 @@ public class Administrador {
     // Gestión de empleados
     public void agregarEmpleado(Empleado empleado) {
         empleados.add(empleado);
+        guardarEmpleados(); // Guardar cuando agregue
     }
 
     public boolean eliminarEmpleado(int id) {
         for (int i = 0; i < empleados.size(); i++) {
             if (empleados.get(i).getId() == id) {
                 empleados.remove(i);
+                guardarEmpleados(); // Guardar cuando elimine
                 return true;
             }
         }
@@ -62,6 +64,7 @@ public class Administrador {
     // Gestión de clientes
     public void agregarCliente(Cliente cliente) {
         clientes.add(cliente);
+        guardarClientes(); // Guardar cuando agregue
     }
 
     public Cliente buscarCliente(int id) {
@@ -73,14 +76,11 @@ public class Administrador {
         return null;
     }
 
-    public Cliente buscarClientePorUsername(String username) {
-        // Método removido ya que Cliente no tiene username
-        return null;
-    }
 
     // Gestión de transacciones
     public void registrarTransaccion(Transaccion transaccion) {
         transacciones.add(transaccion);
+        guardarTransacciones(); // Guardar cuando registre
     }
 
     public ArrayList<Transaccion> getTransaccionesSospechosas() {
@@ -98,34 +98,34 @@ public class Administrador {
         return this.usuario.equals(username) && this.contrasena.equals(password);
     }
 
-    // Guardar empleados en archivo (manejo básico de excepciones)
+    // ARREGLAR GUARDAR EMPLEADOS - AHORA SÍ FUNCIONA BIEN
     public void guardarEmpleados() {
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("empleados.txt"));
+            FileWriter archivo = new FileWriter("empleados.txt");
             for (int i = 0; i < empleados.size(); i++) {
                 Empleado emp = empleados.get(i);
-                writer.write(emp.getId() + "," + emp.getNombre() + "," + emp.getPuesto());
-                writer.newLine();
+                archivo.write(emp.getId() + "," + emp.getNombre() + "," + emp.getPuesto() + "\n");
             }
-            writer.close();
+            archivo.close();
         } catch (IOException e) {
             System.out.println("Error al guardar empleados: " + e.getMessage());
         }
     }
 
-    // Cargar empleados desde archivo (manejo básico de excepciones)
     public void cargarEmpleados() {
         try {
             empleados.clear();
             BufferedReader reader = new BufferedReader(new FileReader("empleados.txt"));
             String linea;
             while ((linea = reader.readLine()) != null) {
-                String[] partes = linea.split(",");
-                if (partes.length == 3) {
-                    int id = Integer.parseInt(partes[0]);
-                    String nombre = partes[1];
-                    String puesto = partes[2];
-                    empleados.add(new Empleado(id, nombre, puesto));
+                if (!linea.trim().equals("")) { // No procesa líneas vacías
+                    String[] partes = linea.split(",");
+                    if (partes.length == 3) {
+                        int id = Integer.parseInt(partes[0]);
+                        String nombre = partes[1];
+                        String puesto = partes[2];
+                        empleados.add(new Empleado(id, nombre, puesto));
+                    }
                 }
             }
             reader.close();
@@ -135,5 +135,95 @@ public class Administrador {
             System.out.println("Error en formato de archivo: " + e.getMessage());
         }
     }
-}
 
+    // MÉTODOS PARA GUARDAR CLIENTES
+    public void guardarClientes() {
+        try {
+            FileWriter archivo = new FileWriter("clientes.txt");
+            for (int i = 0; i < clientes.size(); i++) {
+                Cliente cliente = clientes.get(i);
+                archivo.write(cliente.getId() + "," + cliente.getNombre() + "," + cliente.getCuenta().getSaldo() + "\n");
+            }
+            archivo.close();
+        } catch (IOException e) {
+            System.out.println("Error al guardar clientes: " + e.getMessage());
+        }
+    }
+
+    public void cargarClientes() {
+        try {
+            clientes.clear();
+            BufferedReader reader = new BufferedReader(new FileReader("clientes.txt"));
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                if (!linea.trim().equals("")) { // No procesar líneas vacías
+                    String[] partes = linea.split(",");
+                    if (partes.length == 3) {
+                        int id = Integer.parseInt(partes[0]);
+                        String nombre = partes[1];
+                        double saldo = Double.parseDouble(partes[2]);
+
+                        // Crear cuenta de ahorro por defecto
+                        CuentaAhorro cuenta = new CuentaAhorro(id + 1000, saldo);
+                        clientes.add(new Cliente(id, nombre, cuenta));
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error al cargar clientes: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Error en formato de archivo clientes: " + e.getMessage());
+        }
+    }
+
+    // MÉTODOS PARA TRANSACCIONES
+    public void guardarTransacciones() {
+        try {
+            FileWriter archivo = new FileWriter("transacciones.txt");
+            archivo.write("Tipo,Monto,Fecha\n"); // Escribir encabezado
+            for (int i = 0; i < transacciones.size(); i++) {
+                Transaccion trans = transacciones.get(i);
+                archivo.write(trans.getTipo() + "," + trans.getMonto() + "," + trans.getFecha() + "\n");
+            }
+            archivo.close();
+        } catch (IOException e) {
+            System.out.println("Error al guardar transacciones: " + e.getMessage());
+        }
+    }
+
+    public void cargarTransacciones() {
+        try {
+            transacciones.clear();
+            BufferedReader reader = new BufferedReader(new FileReader("transacciones.txt"));
+            String linea;
+            boolean primeraLinea = true;
+            while ((linea = reader.readLine()) != null) {
+                if (primeraLinea) {
+                    primeraLinea = false; // Saltar la primera línea (encabezado)
+                    continue;
+                }
+                if (!linea.trim().equals("")) {
+                    String[] partes = linea.split(",");
+                    if (partes.length == 3) {
+                        String tipo = partes[0];
+                        double monto = Double.parseDouble(partes[1]);
+                        transacciones.add(new Transaccion(tipo, monto));
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error al cargar transacciones: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Error en formato de archivo transacciones: " + e.getMessage());
+        }
+    }
+
+    // MÉTODO PARA CARGAR TODO AL INICIO
+    public void cargarTodo() {
+        cargarEmpleados();
+        cargarClientes();
+        cargarTransacciones();
+    }
+}

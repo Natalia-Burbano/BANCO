@@ -1,1 +1,2 @@
-1095208375,Jacobo Luengas,model.org.uniquindio.edu.co.poo.bancouq.Administrador
+1,Ana Martinez,Cajero
+2,Luis Garcia,Supervisor

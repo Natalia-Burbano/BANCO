@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -11,29 +12,36 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="774.0" prefWidth="1533.0" style="-fx-background-color: ffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<!-- AQUÍ SE AGREGA EL CONTROLADOR CON LA RUTA CORRECTA -->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="774.0" prefWidth="1533.0" style="-fx-background-color: ffff;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.uniquindio.edu.co.poo.bancouq.viewController.RegistroViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGREEN" height="43.0" layoutX="-25.0" stroke="DARKGREEN" strokeType="INSIDE" style="-fx-arc-height: 0;" width="1561.0" />
-      <Label layoutX="14.0" layoutY="56.0" text="CREACIÓN DE CUENTA">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGREEN" height="43.0" layoutX="-25.0" stroke="DARKGREEN" strokeType="INSIDE" style="-fx-arc-height: 0;" width="1559.0" />
+      <Label layoutX="618.0" layoutY="53.0" text="CREACIÓN DE CUENTA">
          <font>
-            <Font size="25.0" />
+            <Font name="Arial Rounded MT Bold" size="25.0" />
          </font>
       </Label>
-      <Label layoutX="299.0" layoutY="304.0" text="DATOS PERSONALES">
+      <Label layoutX="242.0" layoutY="310.0" text="DATOS PERSONALES">
          <font>
-            <Font size="26.0" />
+            <Font name="Arial Rounded MT Bold" size="26.0" />
          </font>
       </Label>
-      <Circle fill="WHITE" layoutX="399.0" layoutY="192.0" radius="100.0" stroke="#41893f" strokeType="INSIDE" strokeWidth="6.0" />
-      <ImageView fitHeight="128.0" fitWidth="122.0" layoutX="338.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGREEN" height="43.0" layoutY="171.0" stroke="DARKGREEN" strokeType="INSIDE" style="-fx-arc-height: 0;" width="1533.0" />
+      <Circle fill="WHITE" layoutX="767.0" layoutY="192.0" radius="100.0" stroke="#41893f" strokeType="INSIDE" strokeWidth="6.0" />
+      <ImageView fitHeight="128.0" fitWidth="122.0" layoutX="706.0" layoutY="131.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@usuarios.jpg" />
          </image>
       </ImageView>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGREEN" height="384.0" layoutX="236.0" layoutY="349.0" stroke="DARKGREEN" strokeType="INSIDE" style="-fx-arc-height: 20; -fx-arc-width: 20;" width="1115.0" />
-      <TextField layoutX="300.0" layoutY="412.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
-      <TextField layoutX="300.0" layoutY="543.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
-      <TextField layoutX="300.0" layoutY="475.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
+
+      <!-- CAMPOS CON fx:id CORRECTOS PARA EL CONTROLADOR -->
+      <TextField fx:id="txtNombres" layoutX="300.0" layoutY="412.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
+      <TextField fx:id="txtApellidos" layoutX="300.0" layoutY="475.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
+      <TextField fx:id="txtTelefono" layoutX="300.0" layoutY="543.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
+      <TextField fx:id="txtIdentificacion" layoutX="300.0" layoutY="605.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
+
       <Label layoutX="305.0" layoutY="382.0" text="NOMBRE/S" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
@@ -47,15 +55,31 @@
       <Label layoutX="302.0" layoutY="519.0" text="NÚMERO TELEFÓNICO" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
-         </font></Label>
-      <TextField layoutX="300.0" layoutY="605.0" prefHeight="26.0" prefWidth="979.0" style="-fx-background-radius: 20;" />
+         </font>
+      </Label>
       <Label layoutX="306.0" layoutY="581.0" text="IDENTIFICACIÓN" textFill="WHITE">
          <font>
             <Font name="Arial Rounded MT Bold" size="12.0" />
-         </font></Label>
-      <ComboBox layoutX="303.0" layoutY="652.0" prefWidth="150.0" promptText="Tipo de Cuenta" style="-fx-background-radius: 20; -fx-background-color: #cfd1cf;">
+         </font>
+      </Label>
+
+      <!-- COMBOBOX CON EL fx:id CORRECTO -->
+      <ComboBox fx:id="comboTipoUsuario" layoutX="304.0" layoutY="661.0" prefWidth="150.0" promptText="Registrarse Como">
          <cursor>
             <Cursor fx:constant="HAND" />
-         </cursor></ComboBox>
+         </cursor>
+      </ComboBox>
+
+      <!-- BOTÓN CON ACCIÓN CONECTADA AL CONTROLADOR -->
+      <Button fx:id="btnRegistrar" layoutX="1201.0" layoutY="660.0" mnemonicParsing="false" onAction="#registrarCuenta" text="Registrarse">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <Button id="volver" fx:id="buttonVolver" layoutX="674.0" layoutY="660.0" mnemonicParsing="false" onAction="#volver" prefHeight="26.0" prefWidth="230.0" text="Volver a la Pantalla Principal">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>

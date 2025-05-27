@@ -44,7 +44,7 @@ public class LoginController {
         administrador.agregarCliente(cliente3);
     }
 
-    // Método principal de autenticación con credenciales hardcodeadas
+    // Método principal de autenticación con credenciales
     public boolean autenticarUsuario(String username, String password, String rolSeleccionado) {
         // Validar administrador
         if (rolSeleccionado.equals("Administrador")) {

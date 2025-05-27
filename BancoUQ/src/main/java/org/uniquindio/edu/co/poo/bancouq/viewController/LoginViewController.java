@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 import org.uniquindio.edu.co.poo.bancouq.model.*;
 import java.io.IOException;
 
+import static org.uniquindio.edu.co.poo.bancouq.model.TipoUsuario.validarCredenciales;
+
+
 public class LoginViewController {
 
     @FXML
@@ -53,81 +56,53 @@ public class LoginViewController {
 
     @FXML
     void iniciarSesion(ActionEvent event) {
-        String usuario = usuarioField.getText().trim();
-        String contrasena = contrasenaField.getText().trim();
-        String rolSeleccionado = comboRol.getValue();
-
-        // Validar campos vacíos
-        if (usuario.isEmpty() || contrasena.isEmpty() || rolSeleccionado == null) {
-            mostrarMensajeError("Complete todos los campos");
+        // Validar que todos los campos estén llenos
+        if (usuarioField.getText().trim().isEmpty()) {
+            mostrarMensajeError("Por favor ingrese su usuario");
             return;
         }
 
-        // Obtener administrador
-        administrador = getAdministrador();
-
-        // Validar según el rol
-        boolean loginExitoso = false;
-
-        if (rolSeleccionado.equals("Administrador")) {
-            // Validar administrador
-            if (usuario.equals("admin") && contrasena.equals("admin123")) {
-                loginExitoso = true;
-            } else {
-                // Buscar en empleados con puesto administrador
-                for (int i = 0; i < administrador.getEmpleados().size(); i++) {
-                    Empleado emp = administrador.getEmpleados().get(i);
-                    if (emp.getPuesto().equalsIgnoreCase("Administrador")) {
-                        String[] partes = emp.getNombre().split(" ");
-                        String username = partes[0].toLowerCase() + emp.getId();
-                        String password = "admin" + emp.getId();
-
-                        if (usuario.equalsIgnoreCase(username) && contrasena.equals(password)) {
-                            loginExitoso = true;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        else if (rolSeleccionado.equals("Cajero")) {
-            // Buscar en empleados
-            for (int i = 0; i < administrador.getEmpleados().size(); i++) {
-                Empleado emp = administrador.getEmpleados().get(i);
-
-                // Crear username: primera palabra del nombre + ID
-                String[] partes = emp.getNombre().split(" ");
-                String username = partes[0].toLowerCase() + emp.getId();
-                String password = "cajero" + emp.getId();
-
-                if (usuario.equalsIgnoreCase(username) && contrasena.equals(password)) {
-                    loginExitoso = true;
-                    break;
-                }
-            }
-        }
-        else if (rolSeleccionado.equals("Cliente")) {
-            // Buscar en clientes
-            for (int i = 0; i < administrador.getClientes().size(); i++) {
-                Cliente cliente = administrador.getClientes().get(i);
-
-                // Crear username: primera palabra del nombre + ID
-                String[] partes = cliente.getNombre().split(" ");
-                String username = partes[0].toLowerCase() + cliente.getId();
-                String password = "cliente" + cliente.getId();
-
-                if (usuario.equalsIgnoreCase(username) && contrasena.equals(password)) {
-                    loginExitoso = true;
-                    break;
-                }
-            }
+        if (contrasenaField.getText().trim().isEmpty()) {
+            mostrarMensajeError("Por favor ingrese su contraseña");
+            return;
         }
 
-        if (loginExitoso) {
-            mostrarMensajeExito("¡Bienvenido al sistema!");
-            navegarSegunRol(event, rolSeleccionado);
+        if (comboRol.getValue() == null) {
+            mostrarMensajeError("Por favor seleccione su rol");
+            return;
+        }
+
+        String usuario = usuarioField.getText().trim();
+        String contrasena = contrasenaField.getText().trim();
+        String rol = comboRol.getValue();
+
+        // Validar credenciales según el rol seleccionado
+        if (validarCredenciales(usuario, contrasena, rol)) {
+            mostrarMensajeExito("Inicio de sesión exitoso como " + rol);
+            navegarSegunRol(event, rol);
         } else {
-            mostrarOpcionCrearCuenta(rolSeleccionado);
+            mostrarMensajeError("Credenciales incorrectas para el rol " + rol);
+        }
+    }
+    private boolean validarCredenciales(String usuario, String contrasena, String rol) {
+        switch (rol) {
+            case "Administrador":
+                // Credenciales de administrador
+                return (usuario.equals("admin") && contrasena.equals("admin123")) ||
+                        (usuario.equals("admin1") && contrasena.equals("admin456"));
+
+            case "Cajero":
+                // Credenciales de cajero
+                return (usuario.equals("cajero1") && contrasena.equals("pass123")) ||
+                        (usuario.equals("cajero") && contrasena.equals("cajero123"));
+
+            case "Cliente":
+                // Credenciales de cliente
+                return (usuario.equals("sofia123") && contrasena.equals("cliente1")) ||
+                        (usuario.equals("cliente") && contrasena.equals("cliente123"));
+
+            default:
+                return false;
         }
     }
 
@@ -151,6 +126,8 @@ public class LoginViewController {
             }
         }
     }
+
+
 
     /**
      * Método para manejar el clic en el label "Crear Cuenta"
@@ -180,21 +157,26 @@ public class LoginViewController {
 
     private void navegarSegunRol(ActionEvent event, String rol) {
         try {
-            String vistaDestino = "";
-            String tituloVentana = "";
+            String vistaDestino;
+            String tituloVentana;
 
-            // DETERMINAR LA RUTA SEGÚN EL ROL
-            if (rol.equals("Administrador")) {
-                vistaDestino = "/org/uniquindio/edu/co/poo/bancouq/administrador.fxml";
-                tituloVentana = "BANCO UQ - Panel de Administrador";
-            }
-            else if (rol.equals("Cajero")) {
-                vistaDestino = "/org/uniquindio/edu/co/poo/bancouq/cajero.fxml";
-                tituloVentana = "BANCO UQ - Panel de Cajero";
-            }
-            else if (rol.equals("Cliente")) {
-                vistaDestino = "/org/uniquindio/edu/co/poo/bancouq/transaccion-view.fxml";
-                tituloVentana = "BANCO UQ - Panel de Cliente";
+            // Determinar la vista según el rol
+            switch (rol) {
+                case "Administrador":
+                    vistaDestino = "/org/uniquindio/edu/co/poo/bancouq/administrador.fxml";
+                    tituloVentana = "BANCO UQ - Panel de Administrador";
+                    break;
+                case "Cajero":
+                    vistaDestino = "/org/uniquindio/edu/co/poo/bancouq/cajero.fxml";
+                    tituloVentana = "BANCO UQ - Panel de Cajero";
+                    break;
+                case "Cliente":
+                    vistaDestino = "/org/uniquindio/edu/co/poo/bancouq/main-view.fxml";
+                    tituloVentana = "BANCO UQ - Panel de Cliente";
+                    break;
+                default:
+                    mostrarMensajeError("Rol no válido");
+                    return;
             }
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource(vistaDestino));
@@ -209,6 +191,9 @@ public class LoginViewController {
         } catch (IOException e) {
             e.printStackTrace();
             mostrarMensajeError("Error al cargar la vista: " + e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarMensajeError("Error inesperado: " + e.getMessage());
         }
     }
 

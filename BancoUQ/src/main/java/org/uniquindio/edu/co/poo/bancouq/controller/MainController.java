@@ -24,7 +24,7 @@ public class MainController {
         cargarVista("/org/uniquindio/edu/co/poo/bancouq/administrador.fxml");
     }
 
-    private void cargarVista(String rutaFXML) {
+    public void cargarVista(String rutaFXML) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(rutaFXML));
             Node vista = loader.load();
@@ -33,4 +33,7 @@ public class MainController {
             e.printStackTrace();
         }
     }
+
+
+    
 }

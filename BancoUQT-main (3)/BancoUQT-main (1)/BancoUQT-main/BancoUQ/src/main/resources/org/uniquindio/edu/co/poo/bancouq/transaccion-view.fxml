@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f0f0, #e0e0e0);"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.uniquindio.edu.co.poo.bancouq.viewController.TransaccionViewController">
+
+    <top>
+        <VBox alignment="CENTER" style="-fx-background-color: #014a01; -fx-padding: 15;">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestión de Transacciones" />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+            <TitledPane expanded="true" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Datos de la Transacción">
+                <VBox spacing="15" style="-fx-padding: 15;">
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <Label style="-fx-font-weight: bold;" text="Cuenta Origen:" />
+                        <TextField fx:id="cuentaOrigenField" prefWidth="250" promptText="Ingrese número de cuenta" />
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <Label style="-fx-font-weight: bold;" text="Cuenta Destino:" />
+                        <TextField fx:id="cuentaDestinoField" prefWidth="250" promptText="Ingrese número de cuenta destino" />
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <Label style="-fx-font-weight: bold;" text="Monto:" />
+                        <TextField fx:id="montoField" prefWidth="200" promptText="Ingrese monto" />
+                    </HBox>
+
+                    <HBox alignment="CENTER_LEFT" spacing="15">
+                        <Label style="-fx-font-weight: bold;" text="Tipo de Transacción:" />
+                        <ComboBox fx:id="tipoTransaccionCombo" prefWidth="200" promptText="Seleccione tipo">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Depósito" />
+                                    <String fx:value="Retiro" />
+                                    <String fx:value="Transferencia" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                    </HBox>
+
+                    <HBox alignment="CENTER" spacing="20" style="-fx-padding: 20 0 0 0;">
+                        <Button onAction="#realizarTransaccion" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 200; -fx-border-radius: 5; -fx-padding: 10;" text="Realizar Transacción">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <effect>
+                        <DropShadow />
+                     </effect></Button>
+                    </HBox>
+                </VBox>
+            </TitledPane>
+         <effect>
+            <DropShadow />
+         </effect>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" prefWidth="428.0" style="-fx-padding: 15;">
+            <Button onAction="#volver" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-min-width: 200; -fx-border-radius: 5;" text="Volver al Menú Principal">
+            <cursor>
+               <Cursor fx:constant="HAND" />
+            </cursor>
+            <effect>
+               <DropShadow />
+            </effect></Button>
+        </HBox>
+    </bottom>
+
+</BorderPane>

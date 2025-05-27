@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane style="-fx-background-color: linear-gradient(to bottom, #f0f0f0, #e0e0e0);"
+            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.uniquindio.edu.co.poo.bancouq.viewController.AdministradorViewController">
+
+    <top>
+        <VBox alignment="CENTER" style="-fx-background-color: #014a01; -fx-padding: 15;">
+            <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestión de Administradores" />
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+            <!-- Panel de autenticación -->
+            <TitledPane expanded="true" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Autenticación">
+                <VBox spacing="10" style="-fx-padding: 10;">
+                    <HBox alignment="CENTER" spacing="15">
+                        <Label style="-fx-font-weight: bold;" text="Usuario:" />
+                        <TextField fx:id="usuarioField" prefWidth="150" promptText="Ingrese usuario" />
+                        <Label style="-fx-font-weight: bold;" text="Contraseña:" />
+                        <PasswordField fx:id="contrasenaField" prefWidth="150" promptText="Ingrese contraseña" />
+                        <Button onAction="#autenticar" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" text="Autenticar">
+                     <effect>
+                        <DropShadow radius="8.245000000000001" width="13.98" />
+                     </effect></Button>
+                    </HBox>
+                </VBox>
+            </TitledPane>
+
+            <!-- Panel de gestión de empleados -->
+            <TitledPane expanded="true" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Gestión de Empleados">
+                <VBox spacing="15" style="-fx-padding: 10;">
+                    <HBox alignment="CENTER" spacing="15">
+                        <Label style="-fx-font-weight: bold;" text="ID:" />
+                        <TextField fx:id="idField" prefWidth="80" promptText="ID del empleado" />
+                        <Label style="-fx-font-weight: bold;" text="Nombre:" />
+                        <TextField fx:id="nombreField" prefWidth="200" promptText="Nombre completo" />
+                        <Label style="-fx-font-weight: bold;" text="Rol:" />
+                        <ComboBox fx:id="rolCombo" prefWidth="150" />
+                    </HBox>
+
+                    <TableView fx:id="empleadosTable" prefHeight="200" prefWidth="400" style="-fx-border-color: #bdc3c7; -fx-border-width: 1;">
+                        <columns>
+                            <TableColumn fx:id="idColumn" prefWidth="100" text="ID" />
+                            <TableColumn fx:id="nombreColumn" prefWidth="200" text="Nombre" />
+                            <TableColumn fx:id="rolColumn" prefWidth="150" text="Rol" />
+                        </columns>
+                    </TableView>
+
+                    <HBox alignment="CENTER" spacing="15">
+                        <Button onAction="#registrarEmpleado" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 100; -fx-border-radius: 5;" text="Registrar" />
+                        <Button onAction="#modificarEmpleado" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 100; -fx-border-radius: 5;" text="Modificar" />
+                        <Button onAction="#eliminarEmpleado" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 100; -fx-border-radius: 5;" text="Eliminar" />
+                  <effect>
+                     <DropShadow radius="7.075" width="9.3" />
+                  </effect>
+                    </HBox>
+                </VBox>
+            </TitledPane>
+
+            <!-- Panel de monitoreo -->
+            <TitledPane expanded="true" style="-fx-font-weight: bold; -fx-text-fill: #2c3e50;" text="Monitoreo de Transacciones">
+                <VBox spacing="15" style="-fx-padding: 10;">
+                    <TableView fx:id="transaccionesTable" prefHeight="200" prefWidth="400" style="-fx-border-color: #bdc3c7; -fx-border-width: 1;">
+                        <columns>
+                            <TableColumn fx:id="tipoColumn" prefWidth="150" text="Tipo" />
+                            <TableColumn fx:id="montoColumn" prefWidth="150" text="Monto" />
+                            <TableColumn fx:id="fechaColumn" prefWidth="150" text="Fecha" />
+                        </columns>
+                    </TableView>
+                    <Button onAction="#generarReporteTransacciones" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 250; -fx-border-radius: 5;" text="Generar Reporte de Transacciones">
+                  <effect>
+                     <DropShadow height="10.5" radius="6.805" width="18.72" />
+                  </effect></Button>
+                </VBox>
+            </TitledPane>
+         <effect>
+            <DropShadow />
+         </effect>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 15;">
+            <Button onAction="#volver" style="-fx-background-color: #126112; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-min-width: 200; -fx-border-radius: 5;" text="Volver al Menú Principal">
+            <effect>
+               <DropShadow radius="8.83" width="16.32" />
+            </effect></Button>
+        </HBox>
+    </bottom>
+
+</BorderPane>
